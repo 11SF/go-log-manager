@@ -19,6 +19,7 @@ func New() *echo.Echo {
 	// middlewares.SetAdminMiddlewares(adminGroup)
 
 	//set main routes
+	// e.Use(middleware.CORS())
 	fpGroup := e.Group("/fp")
 	api.TransactionGroup(fpGroup)
 
