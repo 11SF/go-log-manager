@@ -17,6 +17,7 @@ type Transaction struct {
 	Price        float32 `json:"price" validate:"required"`
 	Month        int32   `json:"month" validate:"required"`
 	Date_overdue int32   `json:"date_overdue" validate:"required"`
+	Status       string  `json:"status" validate:"required"`
 }
 
 type Message struct {
