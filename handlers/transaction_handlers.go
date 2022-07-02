@@ -10,14 +10,16 @@ import (
 
 type Transaction struct {
 	gorm.Model
-	Member_id    string  `json:"member_id" validate:"required"`
-	Name         string  `json:"name" validate:"required"`
-	Family_id    string  `json:"family_id" validate:"required"`
-	Family_name  string  `json:"family_name" validate:"required"`
-	Price        float32 `json:"price" validate:"required"`
-	Month        int32   `json:"month" validate:"required"`
-	Date_overdue int32   `json:"date_overdue" validate:"required"`
-	Status       string  `json:"status" validate:"required"`
+	Member_id       string  `json:"member_id" validate:"required"`
+	Name            string  `json:"name" validate:"required"`
+	Family_id       string  `json:"family_id" validate:"required"`
+	Family_name     string  `json:"family_name" validate:"required"`
+	Price           float32 `json:"price" validate:"required"`
+	Month           int32   `json:"month" validate:"required"`
+	Old_expire_date string  `json:"old_expire_date" validate:"required"`
+	New_expire_date string  `json:"new_expire_date" validate:"required"`
+	Date_overdue    int32   `json:"date_overdue" validate:"required"`
+	Status          string  `json:"status" validate:"required"`
 }
 
 type Message struct {
@@ -66,13 +68,16 @@ func (h *TransactionHandler) SaveTransaction(c echo.Context) (err error) {
 		return
 	}
 	data := Transaction{
-		Member_id:    u.Member_id,
-		Name:         u.Name,
-		Family_id:    u.Family_id,
-		Family_name:  u.Family_name,
-		Price:        u.Price,
-		Month:        u.Month,
-		Date_overdue: u.Date_overdue,
+		Member_id:       u.Member_id,
+		Name:            u.Name,
+		Family_id:       u.Family_id,
+		Family_name:     u.Family_name,
+		Price:           u.Price,
+		Month:           u.Month,
+		Old_expire_date: u.Old_expire_date,
+		New_expire_date: u.New_expire_date,
+		Date_overdue:    u.Date_overdue,
+		Status:          u.Status,
 	}
 	if data.Member_id != "" && data.Name != "" && data.Family_id != "" && data.Family_name != "" {
 		h.DB.Create(&data)
