@@ -44,10 +44,26 @@ func (h *TransactionHandler) Initialize() {
 	h.DB = db
 }
 
+type getTransactionResponse struct {
+	currentPage int32
+	totalPages  int32
+	dataSize    int32
+	data        []Transaction
+}
+
 func (h *TransactionHandler) GetAllTransaction(c echo.Context) error {
+	response := getTransactionResponse{}
+
 	transaction := []Transaction{}
 	h.DB.Find(&transaction)
-	return c.JSON(http.StatusOK, transaction)
+
+	if transaction != nil {
+		response.data = transaction
+	}
+
+	h.getPagesInfo("", 10)
+
+	return c.JSON(http.StatusOK, response)
 }
 
 func (h *TransactionHandler) GetAllTransactionByFamilyId(c echo.Context) error {
@@ -117,4 +133,24 @@ func (h *TransactionHandler) UpdateTransaction(c echo.Context) (err error) {
 
 	// h.DB.Where("id = ?", id).Delete(&Transaction{})
 	return c.NoContent(http.StatusOK)
+}
+
+type totalRows struct {
+	rows int
+}
+
+func (h *TransactionHandler) getPagesInfo(familyId string, dataSize float32) {
+
+	// totalRows := totalRows{}
+
+	// sql := "SELECT COUNT(ts.id) as totalRows FROM transactions ts"
+	// if familyId != "" {
+	// 	sql += " WHERE ts.family_id = " + familyId
+	// }
+	// tx := h.DB.Raw(sql).Scan(&totalRows)
+
+	// fmt.Println(tx.)
+
+	// totalPages := totalRow / dataSize
+
 }
