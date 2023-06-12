@@ -1,4 +1,4 @@
-FROM golang:1.18.3-alpine
+FROM golang:1.20.5-alpine
 
 COPY . /api/go/log
 WORKDIR /api/go/log
