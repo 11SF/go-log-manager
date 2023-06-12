@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
+	"github.com/11SF/go-common/database"
+	"github.com/11SF/go-common/postgres"
 	"github.com/labstack/echo"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -35,10 +37,20 @@ func messageResponce(msg string) (res Message) {
 	return res
 }
 
-func (h *TransactionHandler) Initialize() {
-	db, err := gorm.Open(sqlite.Open("log.db"), &gorm.Config{})
+func (h *TransactionHandler) Initialize(cf postgres.Config) {
+	dial, err := postgres.ConnectPostgres(&cf)
 	if err != nil {
-		panic("failed to connect database")
+		panic(err.Error())
+	}
+
+	db, err := database.InitDatabase(&database.Config{
+		Dial:       dial,
+		GormConfig: gorm.Config{},
+	})
+
+	if err != nil {
+		log.Fatal(err.Error())
+
 	}
 	db.AutoMigrate(&Transaction{})
 	h.DB = db

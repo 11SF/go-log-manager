@@ -1,7 +1,7 @@
 package router
 
 import (
-	"11sf/go_log_manager/api"
+	"go_log_manager/api"
 	// "11sf/go_log_manager/api/middlewares"
 
 	"github.com/labstack/echo"

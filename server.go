@@ -1,11 +1,16 @@
 package main
 
 import (
-	"11sf/go_log_manager/router"
+	"go_log_manager/router"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
+
+func init() {
+	godotenv.Load()
+}
 
 func main() {
 	e := router.New()
